@@ -1,0 +1,13 @@
+<hibernate-mapping>
+    <class name="DAO.entity.Role" table="roles">
+    <id column="ID" name="id" type="java.lang.Long">
+        <generator class="increment"/>
+    </id>
+    <property column="ROLE" name="roleName" type="java.lang.String"/>
+
+    <set name="usersRole" table="users" lazy="false">
+        <key column="ID"/>
+        <many-to-many column="ID" class="DAO.entity.User"/>
+    </set>
+    </class>
+</hibernate-mapping>
