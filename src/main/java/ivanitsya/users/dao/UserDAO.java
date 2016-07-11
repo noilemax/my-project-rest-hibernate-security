@@ -14,13 +14,13 @@ public interface UserDAO {
 
     void updateUser(User user) throws SQLException;
 
-    User getUserById(Long userId) throws SQLException;
+//    User getUserById(Long userId) throws SQLException;
 
     Collection getAllUsers() throws SQLException;
 
     void deleteUser(User user) throws SQLException;
 
-    Collection getUsersByRole(UserRole userRole) throws SQLException;
+//    Collection getUsersByRole(UserRole userRole) throws SQLException;
 
     User findByUserName(String username);
 }

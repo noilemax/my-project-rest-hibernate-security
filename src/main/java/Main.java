@@ -5,7 +5,6 @@ import ivanitsya.users.model.UserRole;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Администратор on 05.07.2016.
@@ -27,6 +26,7 @@ public class Main {
 
         try {
             userDAO.addUser(user, userRole);
+            userDAO.addUser(user1, userRole1);
             userDAO.addUser(user2, userRole2);
         } catch (SQLException e) {
             System.out.println("не добавляет юзера");
@@ -45,8 +45,8 @@ public class Main {
         for (Object users1 : userDAO.getAllUsers()) {
             System.out.println(users1.toString());
         }
-        user2.setPassword("123");
-        userDAO.updateUser(user);
+        user1.setPassword("666");
+        userDAO.updateUser(user1);
         System.out.println("-------показать всех в базе------------------");
         for (Object users1 : userDAO.getAllUsers()) {
             System.out.println(users1.toString());

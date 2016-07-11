@@ -50,21 +50,6 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
-    public User getUserById(Long userId) throws SQLException {
-        Session session = null;
-        User user = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            user = (User) session.load(User.class, userId);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'findById'", JOptionPane.OK_OPTION);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
-        }
-        return user;
-    }
 
     public Collection getAllUsers() throws SQLException {
         Session session = null;
@@ -98,46 +83,59 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
-    public Collection getUsersByRole(UserRole userRole) throws SQLException {
-        Session session = null;
-        List users = new ArrayList<User>();
-        try {
-            session = HibernateUtil.getSessionFactory().getCurrentSession();
-            session.beginTransaction();
-            Integer role_id = userRole.getUserRoleId();
-            Query query = session.createQuery("from User where username = :roleId").setLong("roleId", role_id);
-            users = (List<User>) query.list();
-            session.getTransaction().commit();
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
-        }
-
-        return users;
-    }
 
     @SuppressWarnings("unchecked")
     public User findByUserName(String username) {
-        Session session = null;
-        List<User> users = new ArrayList<User>();
+        User user = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
 
         try {
-            Query query = (Query) session.createQuery("from User where username=?").setParameter(0, username).list();
-            users = (List<User>) query.list();
+            String queryString = "from User where id = :username";
+            Query query = session.createQuery(queryString);
+            query.setString("username", username);
+            user = (User) query.uniqueResult();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка при получении", JOptionPane.OK_OPTION);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка при получении одного пользователя", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
             }
         }
-        if (users.size() > 0) {
-            return users.get(0);
-        } else {
-            return null;
-        }
-
+        return user;
     }
+
+
+    //    public User getUserById(Long userId) throws SQLException {
+//        Session session = null;
+//        User user = null;
+//        try {
+//            session = HibernateUtil.getSessionFactory().openSession();
+//            user = (User) session.load(User.class, userId);
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'findById'", JOptionPane.OK_OPTION);
+//        } finally {
+//            if (session != null && session.isOpen()) {
+//                session.close();
+//            }
+//        }
+//        return user;
+//    }
+    //    public Collection getUsersByRole(UserRole userRole) throws SQLException {
+//        Session session = null;
+//        List users = new ArrayList<User>();
+//        try {
+//            session = HibernateUtil.getSessionFactory().getCurrentSession();
+//            session.beginTransaction();
+//            Integer role_id = userRole.getUserRoleId();
+//            Query query = session.createQuery("from User where username = :roleId").setLong("roleId", role_id);
+//            users = (List<User>) query.list();
+//            session.getTransaction().commit();
+//        } finally {
+//            if (session != null && session.isOpen()) {
+//                session.close();
+//            }
+//        }
+//        return users;
+//    }
 }
 
