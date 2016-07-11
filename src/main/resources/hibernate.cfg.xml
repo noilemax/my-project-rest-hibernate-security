@@ -13,8 +13,8 @@
         <property name="show_sql">true</property>
         <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
 
-        <mapping resource="DAO/entity/schema/role.hbm.xml"/>
-        <mapping resource="DAO/entity/schema/user.hbm.xml"/>
+        <mapping class="ivanitsya.users.model.User"/>
+        <mapping class="ivanitsya.users.model.UserRole"/>
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hbm2ddl.auto">update</property> -->
     </session-factory>
@@ -51,7 +51,7 @@
     <!--<property name="show_sql">true</property>-->
     <!--<property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>-->
 
-    <!--<mapping resource="DAO/entity/schema/role.hbm.xml"/>-->
-    <!--<mapping resource="DAO/entity/schema/user.hbm.xml"/>-->
+    <!--<mapping resource="ivanitsya.entity.dao/entity/schema/userRole.hbm.xml"/>-->
+    <!--<mapping resource="ivanitsya.entity.dao/entity/schema/user.hbm.xml"/>-->
 <!--</session-factory>-->
 <!--</hibernate-configuration>-->
