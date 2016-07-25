@@ -6,7 +6,6 @@ import ivanitsya.util.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-import javax.swing.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,7 +16,7 @@ import java.util.List;
  */
 public class UserDAOImpl implements UserDAO {
 
-    public void addUser(User user, UserRole role) throws SQLException {
+    public void addUser(User user) {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -25,7 +24,28 @@ public class UserDAOImpl implements UserDAO {
             session.save(user);
             session.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка при вставке", JOptionPane.OK_OPTION);
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка при вставке", JOptionPane.OK_OPTION);
+            System.out.println(e.getMessage() + "Ошибка при вставке");
+        } finally {
+            if (session != null && session.isOpen()) {
+
+                session.close();
+            }
+        }
+    }
+
+
+    public void addUser(User user, UserRole role) throws SQLException {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.save(String.valueOf(user), role);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка при вставке", JOptionPane.OK_OPTION);
+            System.out.println(e.getMessage() + "Ошибка при вставке");
+
         } finally {
             if (session != null && session.isOpen()) {
 
@@ -42,7 +62,9 @@ public class UserDAOImpl implements UserDAO {
             session.update(user);
             session.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка при вставке", JOptionPane.OK_OPTION);
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка при вставке", JOptionPane.OK_OPTION);
+            System.out.println(e.getMessage() + "Ошибка при вставке");
+
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -58,7 +80,9 @@ public class UserDAOImpl implements UserDAO {
             session = HibernateUtil.getSessionFactory().openSession();
             users = session.createCriteria(User.class).list();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'getAll'", JOptionPane.OK_OPTION);
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'getAll'", JOptionPane.OK_OPTION);
+            System.out.println(e.getMessage() + "Ошибка 'getAll'");
+
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -75,7 +99,24 @@ public class UserDAOImpl implements UserDAO {
             session.delete(user);
             session.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка при удалении", JOptionPane.OK_OPTION);
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка при удалении", JOptionPane.OK_OPTION);
+            System.out.println(e.getMessage() + "Ошибка при удалении");
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+    }
+    public void deleteUser(String username) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.delete(username);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка при удалении", JOptionPane.OK_OPTION);
+            System.out.println(e.getMessage() + "Ошибка при удалении");
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -85,7 +126,7 @@ public class UserDAOImpl implements UserDAO {
 
 
     @SuppressWarnings("unchecked")
-    public User findByUserName(String username) {
+    public User loadUserByUsername(String username) {
         User user = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
 
@@ -95,7 +136,9 @@ public class UserDAOImpl implements UserDAO {
             query.setString("username", username);
             user = (User) query.uniqueResult();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка при получении одного пользователя", JOptionPane.OK_OPTION);
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка при получении одного пользователя", JOptionPane.OK_OPTION);
+            System.out.println(e.getMessage() + "Ошибка при получении одного пользователя");
+
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();

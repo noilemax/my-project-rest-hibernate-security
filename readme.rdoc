@@ -2,7 +2,7 @@
 
 Приложение должно быть разработано как REST на Java 8 с использованием Spring Framework.
 Выполняться на сервере приложений Tomcat 8. Для сборки используем Maven. Структура приложения должна быть разбита по соответствующим слоям:
-•	ivanitsya.entity.DAO
+•	DAO
 •	Services
 •	Controllers
 •	Filters

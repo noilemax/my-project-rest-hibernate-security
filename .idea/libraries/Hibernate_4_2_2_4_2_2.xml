@@ -13,6 +13,8 @@
       <root url="jar://$PROJECT_DIR$/../mysql-connector-java-5.1.39/mysql-connector-java-5.1.39-bin.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ideaLibSources/hibernate-core-4.2.2.Final-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>
